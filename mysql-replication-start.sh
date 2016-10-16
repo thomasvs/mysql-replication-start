@@ -1,10 +1,10 @@
 #!/bin/bash
-#title			: replication-start.sh
+#title			: mysql-replication-start.sh
 #description		: This script automates the process of starting a Mysql Replication on 1 master node and N slave nodes.
 #author		 	: Nicolas Di Tullio
 #date			: 20160706
 #version		: 0.2  
-#usage			: bash mysql_replication_autostart.sh
+#usage			: bash mysql-replication-start.sh
 #bash_version		: 4.3.11(1)-release
 #=============================================================================
 
