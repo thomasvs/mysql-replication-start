@@ -16,6 +16,9 @@
 #   - All hosts must be able to receive mysql commands remotely from the node executing this script
 #
 
+usage() { echo "Usage: $0" 1>&2; exit 1; }
+
+# default values
 DB=djangodb
 DUMP_FILE="/tmp/$DB-export-$(date +"%Y%m%d%H%M%S").sql"
 
@@ -24,6 +27,32 @@ PASS=root
 
 MASTER_HOST=192.168.0.201
 SLAVE_HOSTS=(192.168.0.202 192.168.0.203)
+
+# override through options
+while getopts ":d:u:p:m:s:" o; do
+	case "${o}" in
+		d)
+			DB=${OPTARG}
+			;;
+		u)
+			USER=${OPTARG}
+			;;
+		p)
+			PASS=${OPTARG}
+			;;
+		m)
+			MASTER_HOST=${OPTARG}
+			;;
+		s)
+			SLAVE_HOSTS=$(echo ${OPTARG} | tr ":" "\n")
+			;;
+		*)
+			usage
+			;;
+	esac
+done
+shift $((OPTIND-1))
+
 
 ##
 # MASTER
