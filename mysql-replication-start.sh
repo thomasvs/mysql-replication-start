@@ -44,6 +44,7 @@ while getopts ":d:u:p:m:s:" o; do
 			MASTER_HOST=${OPTARG}
 			;;
 		s)
+			unset SLAVE_HOSTS
 			SLAVE_HOSTS=$(echo ${OPTARG} | tr ":" "\n")
 			;;
 		*)
