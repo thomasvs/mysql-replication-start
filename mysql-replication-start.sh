@@ -20,7 +20,6 @@ usage() { echo "Usage: $0" 1>&2; exit 1; }
 
 # default values
 DB=djangodb
-DUMP_FILE="/tmp/$DB-export-$(date +"%Y%m%d%H%M%S").sql"
 
 USER=root
 PASS=root
@@ -54,6 +53,7 @@ while getopts ":d:u:p:m:s:" o; do
 done
 shift $((OPTIND-1))
 
+DUMP_FILE="/tmp/$DB-export-$(date +"%Y%m%d%H%M%S").sql"
 
 ##
 # MASTER
