@@ -53,7 +53,7 @@ while getopts ":d:u:p:U:P:m:s:" o; do
 			;;
 		s)
 			unset SLAVE_HOSTS
-			SLAVE_HOSTS=$(echo ${OPTARG} | tr ":" "\n")
+			IFS=':' read -a SLAVE_HOSTS <<< ${OPTARG}
 			;;
 		*)
 			usage
