@@ -31,7 +31,7 @@ MASTER_HOST=192.168.0.201
 SLAVE_HOSTS=(192.168.0.202 192.168.0.203)
 
 # override through options
-while getopts ":d:u:p:U:P:m:s:" o; do
+while getopts ":d:u:p:U:P:m:s:S:" o; do
 	case "${o}" in
 		d)
 			DB=${OPTARG}
@@ -54,6 +54,9 @@ while getopts ":d:u:p:U:P:m:s:" o; do
 		s)
 			unset SLAVE_HOSTS
 			IFS=':' read -a SLAVE_HOSTS <<< ${OPTARG}
+			;;
+		S)
+			SCP_PORT_ARG="-P ${OPTARG}"
 			;;
 		*)
 			usage
@@ -111,7 +114,7 @@ do
 	echo "SLAVE: $SLAVE_HOST"
 	echo "  - Creating database copy"
 	mysql -h $SLAVE_HOST "-u$ROOT_USER" "-p$ROOT_PASS" -e "DROP DATABASE IF EXISTS $DB; CREATE DATABASE $DB;"
-	scp $DUMP_FILE $SLAVE_HOST:$DUMP_FILE >/dev/null
+	scp $SCP_PORT_ARG $DUMP_FILE $SLAVE_HOST:$DUMP_FILE >/dev/null
 	mysql -h $SLAVE_HOST "-u$ROOT_USER" "-p$ROOT_PASS" $DB < $DUMP_FILE
 
 	echo "  - Setting up slave replication"
